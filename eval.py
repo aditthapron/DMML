@@ -8,6 +8,7 @@ from collections import defaultdict
 
 from data.market1501 import Market1501
 from data.duke import DukeMTMC_reID
+from data.VRIC import VRIC
 from model import resnet_model
 
 from utils import get_id, flip_img, compute_map
@@ -24,10 +25,10 @@ def main(gid=None, dataset=None, dataset_root=None, which=None, exp_dir=None, ve
     """
     GPU_ID = 0                         # gpu id or 'None'
     BATCH_SIZE = 32                    # batch size when extracting query and gallery features
-    IMG_SIZE = (256, 128)
-    DATASET = 'market1501'             # market1501, duke
-    WHICH = 'last'                     # which model to load
-    EXP_DIR = './exp/dmml/market1501'
+    IMG_SIZE = (128, 128)
+    DATASET = 'vric'             # market1501, duke
+    WHICH = '555'                     # which model to load
+    EXP_DIR = './exp/dmml/VRIC'
     NORMALIZE_FEATURE = True           # whether to normalize features in evaluation
     NUM_WORKERS = 8
 
@@ -49,6 +50,8 @@ def main(gid=None, dataset=None, dataset_root=None, which=None, exp_dir=None, ve
             dataset_root = '<DATASET_ROOT_MARKET>'
         elif DATASET == 'duke':
             dataset_root = '<DATASET_ROOT_DUKE>'
+        elif DATASET == 'vric':
+            dataset_root = '/home/aditthapron/work/re-identification/VRIC'
         else:
             raise NotImplementedError
 
@@ -65,6 +68,10 @@ def main(gid=None, dataset=None, dataset_root=None, which=None, exp_dir=None, ve
         datasets = {x: DukeMTMC_reID(dataset_root, transform=eval_transform, split=x)
                     for x in ['gallery', 'query']}
         num_classes = 702
+    elif DATASET == 'vric':
+        datasets = {x: VRIC(dataset_root, transform=eval_transform, split=x)
+                    for x in ['gallery', 'query']}
+        num_classes = 2811
 
     dataloaders = {x: torch.utils.data.DataLoader(datasets[x], batch_size=BATCH_SIZE,
                shuffle=False, num_workers=NUM_WORKERS) for x in ['gallery', 'query']}

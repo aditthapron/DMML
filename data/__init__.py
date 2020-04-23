@@ -6,6 +6,7 @@ import random
 
 from data.market1501 import Market1501
 from data.duke import DukeMTMC_reID
+from data.VRIC import VRIC
 from data.sampler import RandomSampler
 from data.random_erasing import RandomErasing
 
@@ -18,8 +19,8 @@ def make_dataloader(args, epoch=0):
         epoch: current epoch number, used in random erasing data augmentation.
     """
     train_list = [
-        transforms.Resize((args.img_height, args.img_width), interpolation=3),
-        transforms.RandomHorizontalFlip(),
+        transforms.Resize((args.img_height, args.img_width), interpolation=2),
+        # transforms.RandomHorizontalFlip(),
         transforms.ToTensor(),
         transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225])
     ]
@@ -41,6 +42,8 @@ def make_dataloader(args, epoch=0):
         train_set = Market1501(args.dataset_root, train_transform, split='train')
     elif args.dataset == 'duke':
         train_set = DukeMTMC_reID(args.dataset_root, train_transform, split='train')
+    elif args.dataset == 'vric':
+        train_set = VRIC(args.dataset_root, train_transform, split='train')
     else:
         raise NotImplementedError
 

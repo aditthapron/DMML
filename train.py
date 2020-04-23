@@ -30,7 +30,7 @@ def init_seed(args, gids):
         torch.backends.cudnn.benchmark = False
 
 
-def make_model(args, gids=None):
+def make_model(args, gids=None, EXP_DIR=None, WHICH=None):
     """
     Initialize ResNet-50 model.
     """
@@ -39,6 +39,8 @@ def make_model(args, gids=None):
             num_classes = 751
         elif args.dataset == 'duke':
             num_classes = 702
+        elif args.dataset == 'vric':
+            num_classes = 2811
         else:
             raise NotImplementedError
 
@@ -47,10 +49,17 @@ def make_model(args, gids=None):
     else:
         model = resnet_model(remove_downsample=args.remove_downsample)
 
-    if gids is not None:
-        model = model.cuda(gids[0])
-        if len(gids) > 1:
-            model = DataParallel(model, gids)
+    try:
+        model.load_state_dict(torch.load('{}/model_{}.pth'.format(EXP_DIR, WHICH)))
+        if gids is not None:
+            model.cuda(gids[0])
+
+    except Exception as e:
+        print(e)
+        if gids is not None:
+            model = model.cuda(gids[0])
+    if len(gids) > 1:
+        model = DataParallel(model, gids)
 
     return model    
 
@@ -69,7 +78,7 @@ def adjust_lr_exp(optimizer, base_lr, epoch, num_epochs, decay_start_epoch):
     print('=====> lr adjusted to {:.9f}'.format(g['lr']).rstrip('0'))
 
 
-def train(args, model, optimizer, criterion, gids=None):
+def train(args, model, optimizer, criterion, gids=None,ep_start=0):
     """
     Training
     """
@@ -78,10 +87,13 @@ def train(args, model, optimizer, criterion, gids=None):
 
     train_loss = []
     t0 = int(time.time())
-
-    for epoch in range(args.num_epochs):
-        if epoch % 10 == 0:
+    previos_loss = 100
+    dataloader = make_dataloader(args, 0)
+    temp=0
+    for epoch in range(ep_start,args.num_epochs):
+        if epoch % 10 == 0 and temp==1:
             dataloader = make_dataloader(args, epoch)
+        temp=1
         print('=== Epoch {}/{} ==='.format(epoch, args.num_epochs))
         adjust_lr_exp(optimizer, args.lr, epoch+1, args.num_epochs, args.lr_decay_start_epoch)
 
@@ -120,7 +132,9 @@ def train(args, model, optimizer, criterion, gids=None):
         t = int(time.time())
         print('Time elapsed: {}h {}m'.format((t - t0) // 3600, ((t - t0) % 3600) // 60))
 
-        if epoch % 100 == 0 and epoch >= args.num_epochs // 2:
+        # if epoch % 100 == 0 and epoch >= args.num_epochs // 2:
+        if avg_training_loss < previos_loss:
+            previos_loss = avg_training_loss
             model_save_path = os.path.join(args.exp_root, 'model_{}.pth'.format(epoch))
             if gids is not None and len(gids) > 1:
                 torch.save(model.module.state_dict(), model_save_path)
@@ -192,7 +206,7 @@ def main():
         gids = None
 
     init_seed(args, gids)
-    model = make_model(args, gids)
+    model = make_model(args, gids,EXP_DIR=args.exp_root, WHICH=args.which)
     optimizer = optim.Adam(model.parameters(), lr=args.lr, weight_decay=args.weight_decay)
     criterion = make_loss(args, gids)
     print('Done.')

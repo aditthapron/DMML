@@ -2,7 +2,6 @@ import torch
 
 import numpy as np
 
-
 def float_or_string(arg):
     """
     Tries to convert the string to float, otherwise returns the string.
@@ -30,14 +29,15 @@ def get_id(img_path, dataset):
     labels = []
     for path in img_path:
         filename = path.split('/')[-1]
-        label = filename[0:4]
-        camera = filename.split('c')[1]
-        if label[0:2] == '-1':
-            labels.append(-1)
-        else:
-            labels.append(int(label))
-        camera_id.append(int(camera[0]))
+        label = int(filename.split('_')[0])
+        camera = int(filename.split('_')[1])
+        # if label[0:2] == '-1':
+        #     labels.append(-1)
+        # else:
+        labels.append(int(label))
+        camera_id.append(int(camera))
     return camera_id, labels
+
 
 
 def compute_map(index, good_index, junk_index):

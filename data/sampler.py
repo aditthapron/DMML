@@ -12,7 +12,6 @@ class RandomSampler(sampler.Sampler):
         super(RandomSampler, self).__init__(data_source)
         self.data_source = data_source
         self.batch_k = batch_k
-
         self._id2index = defaultdict(list)
         if hasattr(data_source, 'imgs'):
             for idx, path in enumerate(data_source.imgs):

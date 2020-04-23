@@ -20,6 +20,10 @@ def get_parser():
                         type=str,
                         help='path to store models and logs',
                         default='./exp')
+    parser.add_argument('--which',
+                        type=int,
+                        help='start_epoch',
+                        default='0')
 
     parser.add_argument('--num_epochs',
                         type=int,
