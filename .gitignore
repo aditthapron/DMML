@@ -1,0 +1,4 @@
+*.out
+*.sh
+runs/
+exp/
