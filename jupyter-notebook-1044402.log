@@ -1,0 +1,66 @@
+
+For more info and how to connect from windows,
+   see https://docs.ycrc.yale.edu/clusters-at-yale/guides/jupyter/
+
+MacOS or linux terminal command to create your ssh tunnel
+ssh -N -L 8430:compute-0-30:8430 aditthapron@cm.hpc.yale.edu
+
+Windows MobaXterm info
+Forwarded port:same as remote port
+Remote server: compute-0-30
+Remote port: 8430
+SSH server: cm.hpc.yale.edu
+SSH login: aditthapron
+SSH port: 22
+
+Use a Browser on your local machine to go to:
+localhost:8430  (prefix w/ https:// if using password)
+
+[I 22:22:07.844 NotebookApp] Writing notebook server cookie secret to /home/aditthapron/.local/share/jupyter/runtime/notebook_cookie_secret
+[I 22:22:11.626 NotebookApp] JupyterLab extension loaded from /home/aditthapron/work/[/home/aditthapron/work/anaconda3/lib/python3.7/site-packages/jupyterlab
+[I 22:22:11.626 NotebookApp] JupyterLab application directory is /home/aditthapron/work/[/home/aditthapron/work/anaconda3/share/jupyter/lab
+[I 22:22:11.630 NotebookApp] Serving notebooks from local directory: /work/aditthapron/re-identification/DMML
+[I 22:22:11.630 NotebookApp] The Jupyter Notebook is running at:
+[I 22:22:11.630 NotebookApp] http://compute-0-30:8430/?token=cd60b6f933b4c610e3dd7996f1638f86a1921734af8613f1
+[I 22:22:11.630 NotebookApp]  or http://127.0.0.1:8430/?token=cd60b6f933b4c610e3dd7996f1638f86a1921734af8613f1
+[I 22:22:11.630 NotebookApp] Use Control-C to stop this server and shut down all kernels (twice to skip confirmation).
+[C 22:22:11.658 NotebookApp] 
+    
+    To access the notebook, open this file in a browser:
+        file:///home/aditthapron/.local/share/jupyter/runtime/nbserver-5105-open.html
+    Or copy and paste one of these URLs:
+        http://compute-0-30:8430/?token=cd60b6f933b4c610e3dd7996f1638f86a1921734af8613f1
+     or http://127.0.0.1:8430/?token=cd60b6f933b4c610e3dd7996f1638f86a1921734af8613f1
+[I 22:30:20.099 NotebookApp] 302 GET /?token=cd60b6f933b4c610e3dd7996f1638f86a1921734af8613f1 (10.185.0.99) 1.10ms
+[E 22:30:20.369 NotebookApp] Could not open static file ''
+[W 22:30:20.642 NotebookApp] 404 GET /static/components/react/react-dom.production.min.js (10.185.0.99) 28.91ms referer=http://localhost:8430/tree?token=cd60b6f933b4c610e3dd7996f1638f86a1921734af8613f1
+[I 22:30:29.733 NotebookApp] Creating new notebook in 
+[I 22:30:29.855 NotebookApp] Writing notebook-signing key to /home/aditthapron/.local/share/jupyter/notebook_secret
+[W 22:30:31.974 NotebookApp] 404 GET /static/components/react/react-dom.production.min.js (10.185.0.99) 3.20ms referer=http://localhost:8430/notebooks/Untitled.ipynb?kernel_name=python3
+[W 22:30:32.077 NotebookApp] 404 GET /static/components/react/react-dom.production.min.js (10.185.0.99) 2.68ms referer=http://localhost:8430/notebooks/Untitled.ipynb?kernel_name=python3
+[I 22:30:33.440 NotebookApp] Kernel started: 2451211e-23c6-4784-b518-861e66e8ad41
+[I 22:30:35.143 NotebookApp] Adapting from protocol version 5.1 (kernel 2451211e-23c6-4784-b518-861e66e8ad41) to 5.3 (client).
+[I 22:32:33.417 NotebookApp] Saving file at /Untitled.ipynb
+[I 22:34:33.428 NotebookApp] Saving file at /Untitled.ipynb
+[I 22:36:33.414 NotebookApp] Saving file at /Untitled.ipynb
+[I 22:38:33.411 NotebookApp] Saving file at /Untitled.ipynb
+[I 22:40:33.888 NotebookApp] Saving file at /Untitled.ipynb
+[I 22:42:33.454 NotebookApp] Saving file at /Untitled.ipynb
+[I 22:44:33.863 NotebookApp] Saving file at /Untitled.ipynb
+[I 22:46:33.580 NotebookApp] Saving file at /Untitled.ipynb
+[I 22:48:33.898 NotebookApp] Saving file at /Untitled.ipynb
+[I 22:50:33.832 NotebookApp] Saving file at /Untitled.ipynb
+[I 22:52:34.661 NotebookApp] Saving file at /Untitled.ipynb
+[I 22:54:34.619 NotebookApp] Saving file at /Untitled.ipynb
+[I 22:56:33.854 NotebookApp] Saving file at /Untitled.ipynb
+[I 22:58:33.984 NotebookApp] Saving file at /Untitled.ipynb
+[I 23:00:35.249 NotebookApp] Saving file at /Untitled.ipynb
+[I 23:02:37.661 NotebookApp] Saving file at /Untitled.ipynb
+[I 23:04:36.456 NotebookApp] Saving file at /Untitled.ipynb
+[I 23:06:36.392 NotebookApp] Saving file at /Untitled.ipynb
+[I 23:08:36.181 NotebookApp] Saving file at /Untitled.ipynb
+[I 23:10:35.923 NotebookApp] Saving file at /Untitled.ipynb
+[I 23:12:36.409 NotebookApp] Saving file at /Untitled.ipynb
+[I 23:14:37.631 NotebookApp] Saving file at /Untitled.ipynb
+[I 23:15:55.600 NotebookApp] Starting buffering for 2451211e-23c6-4784-b518-861e66e8ad41:a36e32e8b0e64e468121ec4f955defd6
+slurmstepd: error: *** JOB 1044402 ON compute-0-30 CANCELLED AT 2020-04-23T23:16:10 ***
